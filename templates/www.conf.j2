@@ -1,0 +1,17 @@
+[www]
+listen = 127.0.0.1:9000
+listen.allowed_clients = 127.0.0.1
+user = {{ php_fpm_pool_user }}
+group = {{ php_fpm_pool_group }}
+
+pm = {{ php_fpm_mode }}
+pm.max_children = {{ php_fpm_pm_max_children }}
+{% if php_fpm_mode == "dynamic" %}
+pm.start_servers = {{ php_fpm_pm_start_servers }}
+pm.min_spare_servers = {{ php_fpm_pm_min_spare_servers }}
+pm.max_spare_servers = {{ php_fpm_pm_max_spare_servers }}
+{% endif %}
+{% if php_fpm_mode == "ondemand" %}
+pm.process_idle_timeout = {{ php_fpm_pm_process_idle_timeout }}
+{% endif %}
+pm.max_requests = {{ php_fpm_pm_max_requests }}
