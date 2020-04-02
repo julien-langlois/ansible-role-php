@@ -1,0 +1,50 @@
+---
+- name: Add Sury signing key
+  apt_key:
+    url: https://packages.sury.org/php/apt.gpg
+  tags:
+    - php
+
+- name: Add Sury repository
+  apt_repository:
+    filename: php
+    repo: deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main
+  tags:
+    - php
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+  tags:
+    - php
+
+- name: Ensure PHP packages are installed.
+  apt:
+    name: "{{ php_packages + php_packages_extra }}"
+    state: "{{ php_packages_state }}"
+    install_recommends: "{{ php_install_recommends }}"
+  register: php_package_install
+  notify: restart webserver
+  tags:
+    - php
+
+- name: Delete APCu configuration file if this role will provide one.
+  file:
+    path: "{{ item }}/{{ php_apc_conf_filename }}"
+    state: absent
+  with_items: "{{ php_extension_conf_paths }}"
+  when: php_enable_apc and php_package_install.changed
+  notify: restart webserver
+  tags:
+    - php
+
+- name: Delete OpCache configuration file if this role will provide one.
+  file:
+    path: "{{ item }}/{{ php_opcache_conf_filename }}"
+    state: absent
+  with_items: "{{ php_extension_conf_paths }}"
+  when: php_opcache_enable | bool and php_package_install.changed
+  notify: restart webserver
+  tags:
+    - php

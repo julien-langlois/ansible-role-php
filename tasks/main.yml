@@ -1,2 +1,32 @@
 ---
-# tasks file for .
+# Setup variables and facts
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+    - php
+
+- import_tasks: setup/variables.yml
+  tags:
+    - php
+
+# Install
+- include_tasks: setup/setup-{{ ansible_os_family }}.yml
+  tags:
+    - php
+
+# Configuration
+- include_tasks: config/configure.yml
+  tags:
+    - php
+
+- include_tasks: config/configure-apcu.yml
+  tags:
+    - php
+
+- include_tasks: config/configure-opcache.yml
+  tags:
+    - php
+
+- include_tasks: config/configure-fpm.yml
+  tags:
+    - php
