@@ -1,0 +1,21 @@
+dependencies: []
+
+galaxy_info:
+  role_name: php
+  author: Julien Langlois
+  description: php installation and customization of php-fpm
+  company: Tido LTD
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+  galaxy_tags:
+    - php
+    - php-fpm
+    - webserver
