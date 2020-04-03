@@ -12,16 +12,9 @@
   tags:
     - php
 
-- name: Update apt cache
-  apt:
-    update_cache: yes
-    cache_valid_time: 86400
-  tags:
-    - php
-
 - name: Ensure PHP packages are installed.
   apt:
-    name: "{{ php_packages + php_packages_extra }}"
+    name: "{{ php_packages }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"
   register: php_package_install
