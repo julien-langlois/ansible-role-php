@@ -1,17 +1,26 @@
 Ansible Role: PHP
 =========
 
-A brief description of the role goes here.
+This role installs the latest versions of php (via Sury) and also allows you to configure :
+
+- php-fpm config
+- php-fpm default pool (dynamic and ondemand modes)
+- opcache
+- php.ini
+- apcu
 
 Requirements
 ------------
 
-None.
+Nginx must be installed beforehand.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+By default, the version of php installed will be php 7.4. This can be changed
+by changing the following variable:
+
+    php_version: 7.x
 
 Dependencies
 ------------
@@ -20,8 +29,6 @@ None.
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
